@@ -24,13 +24,13 @@ const app = {
                 .catch((err) => {
                     console.log(err.data);
                     // 驗證失敗，就進入 .catch 將頁面重新導向回 login.html
-                    window.location = "";
+                    window.location = "https://ocket609.github.io/2023-Vue-weeks_homework/Vue-week2/login";
                 })
         },
 
         // 取得產品資訊
         getProducts() {
-            const url = `${this.apiUrl}/api/${apiPath}/admin/products`;
+            const url = `${this.apiUrl}/api/${this.apiPath}/admin/products`;
             axios
                 .get(url)
                 .then((response) => {
@@ -39,6 +39,7 @@ const app = {
                 })
                 .catch((err) => {
                     conolse.log(err.data);
+                    alert(err.response.data.message);
                 })
         }
     },
@@ -47,7 +48,7 @@ const app = {
         // 取出 Token
         const token = document.cookie.replace(/(?:(?:^|.*;\s*)loginToken\s*=\s*([^;]*).*$)|^.*$/, '$1');
         axios.defaults.headers.common['Authorization'] = token;
-        //this.checkAdmin();
+        this.checkAdmin();
     },
 };
 Vue.createApp(app).mount("#app");
