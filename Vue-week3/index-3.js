@@ -25,7 +25,7 @@ const app = {
             axios
                 .post(url)
                 .then((res) => {
-                    console.log(response.data);
+                    console.log(res.data);
                     console.log("驗證成功"); // 測試用，功能沒問題後可移除
                     alert("驗證成功"); // 測試用，功能沒問題後可移除
                     this.getProducts();
@@ -33,7 +33,7 @@ const app = {
                 .catch((err) => {
                     console.log(err.reaponse);
                     alert(err.response.data.message);
-                    window.location= "https://ocket609.github.io/2023-Vue-weeks_homework/Vue-week3/login-3";
+                    window.location= "./long-3.html";
                     // 驗證失敗，就進入 .catch 將頁面重新導向回 login-3.html
                 })
         },
@@ -41,12 +41,13 @@ const app = {
         // 取得產品資訊
         getProducts() {
             // 只要 API 後方有 /admin 的一定要有 token 驗證才行 ( 也就是必須透過 login 的 API )
-            const url = `${this.APIUrl}/api/${this.APIUrl}/admin/products`;
+            const url = `${this.APIUrl}/api/${this.APIPath}/admin/products`;
             axios
                 .get(url)
                 .then((res) => {
                     console.log(res.data);
-                    this.products = res.data;
+                    this.products = res.data.products;
+                    console.log(this.products);
                 })
                 .catch((err) => {
                     console.log(err.response.data);
@@ -81,7 +82,7 @@ const app = {
         updateProduct() {
             // 先宣告 API 網址與串接方法兩個變數
             // 使用 let 可修改
-            let url = `${this.APIUrl}/api/${this.APIUrl}/admin/products/${this.tempProduct.id}`;
+            let url = `${this.APIUrl}/api/${this.APIPath}/admin/products/${this.tempProduct.id}`;
             let whichOneAPI = "put";  // put 編輯修改
 
             // post 新增
@@ -145,6 +146,14 @@ const app = {
             backdrop: "static"  // 禁止使用者點擊 Modal 以外的地方來關閉視窗，避免輸入到一半資料遺失等等。
             }
         );
+        delProductModal = new bootstrap.Modal(
+            document.getElementById("delProductModal"), 
+            {
+                keyboard: false,
+                backdrop: 'static'
+            }
+        );
+
     },
 }
 Vue.createApp(app).mount("#app");
