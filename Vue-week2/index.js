@@ -24,7 +24,7 @@ const app = {
                 .catch((err) => {
                     console.log(err.data);
                     // 驗證失敗，就進入 .catch 將頁面重新導向回 login.html
-                    window.location = "https://ocket609.github.io/2023-Vue-weeks_homework/Vue-week2/login";
+                    window.location = "./login.html";
                 })
         },
 

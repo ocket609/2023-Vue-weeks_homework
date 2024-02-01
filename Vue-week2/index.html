@@ -60,23 +60,23 @@
                     <!-- 這裡搭配 v-if 來動態顯示單一產品區塊 -->
                     <template v-if="temProduct.id">
                         <div class="card mb-3">
-                            <img :src="tempProduct.imageUrl" class="card-img-top primary-image" alt="主圖">
+                            <img :src="temProduct.imageUrl" class="card-img-top primary-image" alt="主圖">
                             <div class="card-body">
                                 <h5 class="card-title">
-                                {{ tempProduct.title }}
-                                    <span class="badge bg-primary ms-2">{{ tempProduct.category }}</span>
+                                {{ temProduct.title }}
+                                    <span class="badge bg-primary ms-2">{{ temProduct.category }}</span>
                                 </h5>
-                                <p class="card-text">商品描述：{{ tempProduct.description }}</p>
-                                <p class="card-text">商品內容：{{ tempProduct.content }}</p>
+                                <p class="card-text">商品描述：{{ temProduct.description }}</p>
+                                <p class="card-text">商品內容：{{ temProduct.content }}</p>
                                 <div class="d-flex">
-                                    <p class="card-text me-2">{{ tempProduct.price }}</p>
-                                    <p class="card-text text-secondary"><del>{{ tempProduct.origin_price }}</del></p>
-                                    元 / {{ tempProduct.unit }}
+                                    <p class="card-text me-2">{{ temProduct.price }}</p>
+                                    <p class="card-text text-secondary"><del>{{ temProduct.origin_price }}</del></p>
+                                    元 / {{ temProduct.unit }}
                                 </div>
                             </div>
                         </div>
-                        <template>
-                            <img :src="tempProduct.imagesUrl" alt="" class="images m-2">
+                        <template v-for="item in temProduct">
+                            <img :src="temProduct.imagesUrl" alt="" class="images m-2">
                         </template>
                     </template>
                     <p class="text-secondary" v-else>請選擇一個商品查看</p>

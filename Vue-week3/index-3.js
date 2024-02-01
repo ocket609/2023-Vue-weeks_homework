@@ -33,7 +33,7 @@ const app = {
                 .catch((err) => {
                     console.log(err.reaponse);
                     alert(err.response.data.message);
-                    window.location= "./long-3.html";
+                    window.location= "./login-3.html";
                     // 驗證失敗，就進入 .catch 將頁面重新導向回 login-3.html
                 })
         },

@@ -27,7 +27,7 @@ const app = {
 
                     document.cookie = `loginToken=${token}; expires=${new Date (expired)}; path=/`;
                     // 利用 document.cookie 語法將 token 存入網站 cookie 中，並使用 expired 設置過期時間，這裡 expired 回傳的是後端幫我們處理好的值。
-                    window.location = "https://ocket609.github.io/2023-Vue-weeks_homework/Vue-week2/index";
+                    window.location = "./index.html";
                     // 儲存完 token 後，就可以執行 window.location = "index.html"; 這段，將網頁重新導向到產品頁面，完成登入頁面的功能。
                 })
                 .catch((err) => { // 登入失敗

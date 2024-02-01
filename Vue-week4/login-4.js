@@ -19,6 +19,16 @@ const app = {
                 .post(url, this.user) // 取 data > user
                 .then((res) => {
                     console.log(res.data); // 輸入資料登入後 console 看不到 res 資訊
+                    const { token, expired } = res.data;
+                    console.log(token, expired );
+                    document.cookie = `loginToken=${token}; expires=${new Date(expired)}`;
+                                                                      // 到期日
+                    window.location = "./index-4.html"; // 轉址
+                    // 把取到的頁面存到 cookie 存放點，換頁還是可以在網頁 Application 內找到 loginToken
+                })
+                .catch((err) => {
+                    console.log(err);
+                    alert("登入失敗，請重新操作");
                 })
         }
     },
