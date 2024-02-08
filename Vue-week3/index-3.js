@@ -1,14 +1,14 @@
 /* 注意：productModal 必須是在全域環境宣告，假設直接從 mounted 內宣告，會導致該變數作用域只存在 mounted 範圍內（因為 mounted 也屬於函式），而無法在 openModal 函式中順利取得該變數，導致錯誤。 */
 let productModal = null;  // 這為何使用null 而不是 ""?
 let delProductModal = null;
+const APIUrl = "https://vue3-course-api.hexschool.io/v2";
+const APIPath = "qoo";
 
 const app = {
     // 資料
     data() {
     // 先在 data 將會用到的資料定義好
         return {
-            APIUrl: "https://vue3-course-api.hexschool.io/v2",
-            APIPath: "qoo",
             products: [],
 
             // 是預期開啟 Modal 時會代入的資料，在 Modal 顯示單一產品內容
@@ -21,7 +21,7 @@ const app = {
     methods: {
         // 登入驗證
         checkAdmin() {
-            const url = `${this.APIUrl}/api/user/check`;
+            const url = `${APIUrl}/api/user/check`;
             axios
                 .post(url)
                 .then((res) => {
@@ -31,9 +31,9 @@ const app = {
                     this.getProducts();
                 })
                 .catch((err) => {
-                    console.log(err.reaponse);
-                    alert(err.response.data.message);
-                    window.location= "./login-3.html";
+                    console.log(err);
+                    alert(err);
+                    window.location = "./login-3.html";
                     // 驗證失敗，就進入 .catch 將頁面重新導向回 login-3.html
                 })
         },
@@ -41,7 +41,7 @@ const app = {
         // 取得產品資訊
         getProducts() {
             // 只要 API 後方有 /admin 的一定要有 token 驗證才行 ( 也就是必須透過 login 的 API )
-            const url = `${this.APIUrl}/api/${this.APIPath}/admin/products`;
+            const url = `${APIUrl}/api/${APIPath}/admin/products`;
             axios
                 .get(url)
                 .then((res) => {
@@ -50,7 +50,7 @@ const app = {
                     console.log(this.products);
                 })
                 .catch((err) => {
-                    console.log(err.response.data);
+                    console.log(err);
                 })
         },
 
@@ -82,13 +82,13 @@ const app = {
         updateProduct() {
             // 先宣告 API 網址與串接方法兩個變數
             // 使用 let 可修改
-            let url = `${this.APIUrl}/api/${this.APIPath}/admin/products/${this.tempProduct.id}`;
+            let url = `${APIUrl}/api/${APIPath}/admin/products/${this.tempProduct.id}`;
             let whichOneAPI = "put";  // put 編輯修改
 
             // post 新增
                 // 判斷 isNew 的值，得知當前開啟的是新增還是編輯 Modal，再動態調整這兩個變數內容。
             if (this.isNew) {
-                url = `${this.APIUrl}/api/${this.APIPath}/admin/product`;
+                url = `${APIUrl}/api/${APIPath}/admin/product`;
                 whichOneAPI = "post";
             }
             // 這邊的this.isNew = 取到 data.isNew: false，API應該是 編輯才對?
@@ -101,20 +101,20 @@ const app = {
                 })
                 .then((res) => {
                     console.log(res.data);
-                    alert(res.data.message);
+                    alert(res.data);
                     productModal.hide();  // 串接完成後，使用 hide 方法關閉 Modal。
                     this.getProducts();  // 重新取得所有產品資料，完成產品更新。
                 })
                 .catch((err) => {
-                    console.log(err.response);
-                    alert(err.response.data.message);
+                    console.log(err);
+                    alert(err);
                 })
         },
 
         // 刪除
         // 先前在 openModal 函式已經寫好，開啟刪除 Modal 時，就將當前產品資料傳入 tempProduct，所以這裡就可以直接使用 this.tempProduct.id 取得該產品 id，完成刪除產品功能。
         delProduct() {
-            const url = `${this.APIUrl}/api/${this.APIPath}/admin/product/${this.tempProduct.id}`;
+            const url = `${APIUrl}/api/${APIPath}/admin/product/${this.tempProduct.id}`;
             axios
                 .delete(url)
                 .then((res) => {
@@ -125,7 +125,7 @@ const app = {
                 })
                 .catch((err) => {
                     console.log(err.response);
-                    alert(err.reaponse.data.message);
+                    alert(err);
                 })
         }
     },

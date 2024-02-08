@@ -26,14 +26,14 @@ const app = {
                     // token 是登入成功時該 API 會產生的資料，可以理解成一個登入憑證，在串接後台 API 時需要帶入這個 token 才能通過驗證取得資料。
                     // expired 則是一個時間戳記，用於記錄使用者登入的時間。
 
-                    document.cookie = `loginToken=${token}; expires=${new Date (expired)}; path=/`;
+                    document.cookie = `loginToken=${token}; expires=${new Date (expired)};`;
                     // 利用 document.cookie 語法將 token 存入網站 cookie 中，並使用 expired 設置過期時間，這裡 expired 回傳的是後端幫我們處理好的值。
 
                     window.location = "./index-3.html";
                     // 儲存完 token 後，就可以執行 window.location = "index.html"; 這段，將網頁重新導向到產品頁面，完成登入頁面的功能。
                 })
                 .catch((err) => {
-                    console.log(err.response);
+                    console.log(err);
                     alert("登入錯誤！");
                 })
         }
