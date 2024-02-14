@@ -1,6 +1,8 @@
 const APIUrl = "https://vue3-course-api.hexschool.io/v2";
 const APIPath = "qoo";
 
+import pagination from "./pagination.js";
+
 const app = {
     data() {
         return {
@@ -8,6 +10,8 @@ const app = {
             tempProduct: {
                 imageUrl: [], // 多圖
             },
+            pages: {}, // 分頁
+
             // 建立屬性，給 productModal 用
             modalproduct: null,
             // 建立屬性，給 delProductModal 用
@@ -18,15 +22,16 @@ const app = {
     },
     // 通常 axios 會另外定義方法去跑他
     methods: {  // 方法 
-        getProducts() {
+        getProducts(page = 1) {  // 參數預設值
             /* 取得產品資料 */
-            const url = `${APIUrl}/api/${APIPath}/admin/products`;
+            const url = `${APIUrl}/api/${APIPath}/admin/products?page=${page}`;
             console.log(url); // 檢查是否有正確取得，是否一致
             axios
                 .get(url)
                 .then((res) => {
                     console.log(res.data);
                     this.products = res.data.products;
+                    this.pages = res.data.pagination; // 取到 data 分頁
                 })
                 .catch((err) => {
                     console.log(err);
@@ -129,5 +134,8 @@ const app = {
         // this.modalproduct.show(); 測試可開啟後移動到 openModal() 內
         // this.modalDel.show();
     },
+    components: {  // 區域元件
+        pagination,
+    }
 };
 Vue.createApp(app).mount("#app");
