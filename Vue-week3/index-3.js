@@ -25,14 +25,14 @@ const app = {
             axios
                 .post(url)
                 .then((res) => {
-                    console.log(res.data);
-                    console.log("驗證成功"); // 測試用，功能沒問題後可移除
+                    //console.log(res.data);
+                    //console.log("驗證成功"); // 測試用，功能沒問題後可移除
                     alert("驗證成功"); // 測試用，功能沒問題後可移除
                     this.getProducts();
                 })
                 .catch((err) => {
-                    console.log(err);
-                    alert(err);
+                    //console.log(err);
+                    alert(err.data.message);
                     window.location = "./login-3.html";
                     // 驗證失敗，就進入 .catch 將頁面重新導向回 login-3.html
                 })
@@ -45,12 +45,13 @@ const app = {
             axios
                 .get(url)
                 .then((res) => {
-                    console.log(res.data);
+                    //console.log(res.data);
                     this.products = res.data.products;
-                    console.log(this.products);
+                    //console.log(this.products);
                 })
                 .catch((err) => {
-                    console.log(err);
+                    //console.log(err.data.message);
+                    alert(err.data.message);
                 })
         },
 
@@ -82,7 +83,7 @@ const app = {
         updateProduct() {
             // 先宣告 API 網址與串接方法兩個變數
             // 使用 let 可修改
-            let url = `${APIUrl}/api/${APIPath}/admin/products/${this.tempProduct.id}`;
+            let url = `${APIUrl}/api/${APIPath}/admin/product/${this.tempProduct.id}`;
             let whichOneAPI = "put";  // put 編輯修改
 
             // post 新增
@@ -100,14 +101,14 @@ const app = {
                     data: this.tempProduct
                 })
                 .then((res) => {
-                    console.log(res.data);
-                    alert(res.data);
+                    //console.log(res.data);
+                    alert(res.data.message);
                     productModal.hide();  // 串接完成後，使用 hide 方法關閉 Modal。
                     this.getProducts();  // 重新取得所有產品資料，完成產品更新。
                 })
                 .catch((err) => {
-                    console.log(err);
-                    alert(err);
+                    //console.log(err.data.message);
+                    alert(err.data.message);
                 })
         },
 
@@ -118,14 +119,14 @@ const app = {
             axios
                 .delete(url)
                 .then((res) => {
-                    console.log(res.data);
+                    //console.log(res.data);
                     alert(res.data.message);
                     delProductModal.hide();  // 刪除成功後，同樣要記得關閉刪除 Modal
                     this.getProducts();  // 更新資料後，重新取得所有產品的函式，更新所有產品資料。
                 })
                 .catch((err) => {
-                    console.log(err.response);
-                    alert(err);
+                    //console.log(err.response);
+                    alert(err.data.message);
                 })
         }
     },

@@ -16,13 +16,13 @@ const app = {
             axios
                 .post(url, this.user)
                 .then((res) => {
-                    console.log(res.data);
+                    //console.log(res.data);
 
                     // 將 token, expired 兩個變數從回傳的資料中取出
                            // 解構賦值
                     const { token, expired } = res.data;
-                    console.log(token, expired);
-                    console.dir(token, expired);
+                    //console.log(token, expired);
+                    //console.dir(token, expired);
                     // token 是登入成功時該 API 會產生的資料，可以理解成一個登入憑證，在串接後台 API 時需要帶入這個 token 才能通過驗證取得資料。
                     // expired 則是一個時間戳記，用於記錄使用者登入的時間。
 
@@ -33,7 +33,7 @@ const app = {
                     // 儲存完 token 後，就可以執行 window.location = "index.html"; 這段，將網頁重新導向到產品頁面，完成登入頁面的功能。
                 })
                 .catch((err) => {
-                    console.log(err);
+                    //console.log(err.data.message);
                     alert("登入錯誤！");
                 })
         }
