@@ -2,6 +2,7 @@ const APIUrl = "https://vue3-course-api.hexschool.io/v2";
 const APIPath = "qoo";
 
 import pagination from "./pagination.js";
+import productModal from "./productModal.js";
 
 const app = {
     data() {
@@ -22,6 +23,22 @@ const app = {
     },
     // 通常 axios 會另外定義方法去跑他
     methods: {  // 方法 
+        checkUser() {  // 登入驗證
+            const url = `${APIUrl}/api/user/check`;
+            axios
+                .post(url)
+                .then((res) => {
+                    //console.log(res.data);
+                    console.log(res.data.success);
+                    if (res.data.success) {  // success = true 執行 getProducts()
+                        this.getProducts();
+                    }
+                })
+                .catch((err) => {
+                    console.log(err);
+                    window.location = "login-4.html";
+                })
+        },
         getProducts(page = 1) {  // 參數預設值
             /* 取得產品資料 */
             const url = `${APIUrl}/api/${APIPath}/admin/products?page=${page}`;
@@ -35,6 +52,7 @@ const app = {
                 })
                 .catch((err) => {
                     console.log(err);
+                    alert(err.data.message);
                 })
         },
 
@@ -49,7 +67,8 @@ const app = {
                     imagesUrl: [] // 可多圖，初始為陣列
                 };
                 this.isNew = true;
-                this.modalproduct.show(); // 開啟 Modal
+                //this.modalproduct.show(); // 開啟 Modal
+                this.$refs.pModal.openModal();
             } else if (status === "edit") {
                 this.tempProduct = { ...item }; // 淺拷貝
                 // 判斷 this.tempProduct.imagesUrl 這個是不是陣列，如果不是的話我們幫他補進去
@@ -58,7 +77,8 @@ const app = {
                     this.tempProduct.imagesUrl = [];
                 }
                 this.isNew = false;
-                this.modalproduct.show();
+                //this.modalproduct.show();
+                this.$refs.pModal.openModal();
             } else if (status === "delete") {
                 this.tempProduct = { ...item };
                 this.modalDel.show();
@@ -87,11 +107,13 @@ const app = {
                     // 建立完新產品要重新取得列表
                     this.getProducts();
                     // 新增成功後關閉 Modal
-                    this.modalproduct.hide(); // 關閉 Modal
+                    //this.modalproduct.hide(); // 關閉 Modal
+                    this.$refs.pModal.closeModal();
                     this.tempProduct = {}; // 清除框內輸入內容
                 })
                 .catch((err) => {
                     console.log(err);
+                    alert(err.data.message);
                 })
         },
         deleteProduct() {
@@ -110,6 +132,7 @@ const app = {
                 })
                 .catch((err) => {
                     console.log(err);
+                    alert(err.data.message);
                 })
         }
     },
@@ -124,18 +147,20 @@ const app = {
         axios.defaults.headers.common['Authorization'] = token;
         // 管理後台的 api 必須要帶入 token，要帶在 headers 裡面；axios 裡查到上方語法帶入 token
 
-        this.getProducts();  // 驗證後執行 getProducts()
+        this.checkUser();  // 登入驗證
+        //this.getProducts();  // 驗證後執行 getProducts()  // 改到驗證後執行
 
         // 產品
         console.log(this.$refs);
                                                // 對應到 HTML Modal區塊
-        this.modalproduct = new bootstrap.Modal(this.$refs.productModal);
+        
         this.modalDel = new bootstrap.Modal(this.$refs.delProductModal);
-        // this.modalproduct.show(); 測試可開啟後移動到 openModal() 內
+        // this.modalproduct.show(); 測試可開啟後移動到 openModal() 內  // 改到元件內
         // this.modalDel.show();
     },
     components: {  // 區域元件
         pagination,
+        productModal,
     }
 };
 Vue.createApp(app).mount("#app");

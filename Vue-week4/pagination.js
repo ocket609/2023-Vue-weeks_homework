@@ -1,5 +1,5 @@
 export default {
-    props: ["pages", "getProducts()"],  // 從外部資料引入，外到內
+    props: ["pages", "getProducts"],  // 從外部資料引入，外到內
     template: `
     <nav aria-label="Page navigation example">
         <ul class="pagination">
