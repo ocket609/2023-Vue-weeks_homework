@@ -32,6 +32,10 @@ const routes = [
     name: '登入',
     component: () => import('../views/LoginView.vue')
   },
+  { // 重新導向
+    path: '/admin/:pathMatch(.*)*',
+    redirect: { name: '登入' }
+  },
   {
     path: '/admin',
     component: () => import('../views/admin/DashboardView.vue'),

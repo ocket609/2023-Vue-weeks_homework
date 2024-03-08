@@ -57,18 +57,43 @@
         <!-- 分頁 -->
     </div>
     <!-- Modal -->
-    <product-Modal
+    <ProductModal
         :temp-Product="tempProduct"
         :update-Product="updateProduct"
-        ref="pModal"></product-Modal>
-    <RouterView></RouterView>
+        ref="pModal"></ProductModal>
+    <div id="delProductModal" ref="delProductModal" class="modal fade" tabindex="-1"
+                aria-labelledby="delProductModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content border-0">
+          <div class="modal-header bg-danger text-white">
+            <h5 id="delProductModalLabel" class="modal-title">
+              <span>刪除產品</span>
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            是否刪除
+            <strong class="text-danger">{{ tempProduct.title }}</strong> 商品(刪除後將無法恢復)。
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+              取消
+            </button>
+            <button type="button" class="btn btn-danger" @click="deleteProduct">
+              確認刪除
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
 </template>
 
 <script>
 import axios from 'axios'
 // BS5 Modal
 import { Modal } from 'bootstrap'
-import PaginationComponent from '../../components/PaginationComponent'
+import PaginationComponent from '../../components/PaginationComponent.vue'
+import ProductModal from '../../components/ProductModal.vue'
 
 const { VITE_URL, VITE_NAME } = import.meta.env
 
@@ -236,8 +261,8 @@ export default {
   },
   // 區域元件
   components: {
-    PaginationComponent
-    // productModal,
+    PaginationComponent,
+    ProductModal
   }
 }
 </script>

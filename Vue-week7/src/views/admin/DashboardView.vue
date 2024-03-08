@@ -5,7 +5,8 @@
             <RouterLink to="/admin/products">產品列表</RouterLink> |
             <RouterLink to="/admin/order">訂單</RouterLink> |
             <RouterLink to="/admin/coupon">優惠卷</RouterLink> |
-            <RouterLink to="/">返回前台</RouterLink>
+            <RouterLink to="/">返回前台</RouterLink> |
+            <a href="" @click.prevent="loginOut">登出</a>
         </nav>
         <RouterView></RouterView>
     </div>
@@ -29,6 +30,22 @@ export default {
         .catch(() => {
           // console.log(err.data)
           this.$router.push('/login')
+        })
+    },
+
+    // 登出
+    loginOut () {
+      const url = `${VITE_URL}/logout`
+      axios
+        .post(url)
+        .then((res) => {
+          alert('成功登出！')
+          // 登入時有設置 cookie 存取 token，在登出時也要記得清除這個 cookie
+          document.cookie = 'loginToken=; expires=; path=/'
+          this.$router.push('/')
+        })
+        .catch((err) => {
+          alert(err.response.data.message)
         })
     }
   },
