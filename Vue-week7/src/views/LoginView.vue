@@ -56,9 +56,10 @@ export default {
           // console.log(res.data)
           const { token, expired } = res.data
           // console.log(token, expired)
-          document.cookie = `loginToken=${token}; expires=${new Date(expired)}`
           // 到期日
-          this.$router.push('admin/products') // 轉址
+          document.cookie = `loginToken=${token}; expires=${new Date(expired)}`
+          // 轉址
+          this.$router.push('admin/products')
         })
         .catch(() => {
           alert('登入失敗，請重新操作')
